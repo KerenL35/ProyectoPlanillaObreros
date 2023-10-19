@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Planilla </title>
+</head>
+<head>
+    <title>Planilla de Horas</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Planilla de Horas</h1>
+    <table>
+        <tr>
+            <th>Empleado</th>
+            <th>Fecha</th>
+            <th>Horas Trabajadas</th>
+            <th>Horas Extras</th>
+            <th>Horas Dobles</th>
+            <th>Horas Feriadas</th>
+        </tr>
+        <tr>
+            <td><input type="text" name="empleado[]"></td>
+            <td><input type="date" name="fecha[]"></td>
+            <td><input type="number" name="horas_trabajadas[]"></td>
+            <td><input type="number" name="horas_extras[]"></td>
+            <td><input type="number" name="horas_dobles[]"></td>
+            <td><input type="number" name="horas_feriadas[]"></td>
+        </tr>
+        <!-- Puedes agregar más filas según sea necesario -->
+    </table>
+    <button onclick="agregarFila()">Agregar Fila</button>
+    <script>
+        function agregarFila() {
+            var table = document.querySelector("table");
+            var newRow = table.insertRow(table.rows.length - 1);
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+            var cell5 = newRow.insertCell(4);
+            var cell6 = newRow.insertCell(5);
+            
+            cell1.innerHTML = '<input type="text" name="empleado[]">';
+            cell2.innerHTML = '<input type="date" name="fecha[]">';
+            cell3.innerHTML = '<input type="number" name="horas_trabajadas[]">';
+            cell4.innerHTML = '<input type="number" name="horas_extras[]">';
+            cell5.innerHTML = '<input type="number" name="horas_dobles[]">';
+            cell6.innerHTML = '<input type="number" name="horas_feriadas[]">';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Planilla </title>
+</head>
+    <script>
+        // Simula el estado de autenticación (administrador impersonando empleado)
+        const esAdministradorImpersonando = true; // Cambiar a false para ocultar el botón
+
+        function mostrarBotonRegresar() {
+            const botonRegresar = document.getElementById('botonRegresar');
+            if (esAdministradorImpersonando) {
+                botonRegresar.style.display = 'block';
+            } else {
+                botonRegresar.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body onload="mostrarBotonRegresar()">
+    <div class="container">
+        <h1>Interfaz de Usuario</h1>
+
+        <!-- R07: Consultar planilla semanal -->
+        <div class="planilla">
+            <h2>Últimas 15 Planillas Semanales</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Semana</th>
+                        <th>Salario Bruto</th>
+                        <th>Total de Deducciones</th>
+                        <th>Salario Neto</th>
+                        <th>Horas Ordinarias</th>
+                        <th>Horas Extra Normales</th>
+                        <th>Horas Extras Dobles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Semana 1</td>
+                        <td><a href="#">Ver</a></td>
+                        <td><a href="#">Ver</a></td>
+                        <td>$1,300</td>
+                        <td>40 horas</td>
+                        <td>5 horas</td>
+                        <td>2 horas</td>
+                    </tr>
+                    <!-- Repite este bloque de filas para cada planilla semanal -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botón para regresar a la interfaz de administrador -->
+        <button id="botonRegresar" style="display: none" onclick="regresarAInterfazAdministrador()">Regresar a Interfaz de Administrador</button>
+    </div>
+
+    <script>
+        function regresarAInterfazAdministrador() {
+            // Aquí puedes implementar la lógica para regresar a la interfaz de administrador
+            // Redirige a la página de administrador o realiza otras acciones necesarias.
+        }
+    </script>
+</body>
+</html>
