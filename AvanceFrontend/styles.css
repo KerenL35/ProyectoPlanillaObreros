@@ -1,0 +1,98 @@
+/* estilos.css */
+:root {
+    --chalet-green-50: #f3f7ee;
+    --chalet-green-100: #e4ecdb;
+    --chalet-green-200: #ccdbbb;
+    --chalet-green-300: #acc492;
+    --chalet-green-400: #8dac6f;
+    --chalet-green-500: #709151;
+    --chalet-green-600: #526d3b;
+    --chalet-green-700: #435932;
+    --chalet-green-800: #38482c;
+    --chalet-green-900: #313f29;
+    --chalet-green-950: #182112;
+}
+
+input{
+    width: 80%;
+    font-size: 18px;
+    background: none;
+    border-bottom: 1px solid black;
+    height: 7%;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+}
+input:focus{
+    outline: none;
+    border-color: #08d4c3;
+}
+*{ 
+    padding: 0 0;
+    margin: 0 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ccdbbb;
+}
+
+.container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    background-color: #f3f7ee;
+}
+
+.login-container{
+    width: 30%;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccdbbb;
+    box-shadow: #707070 2px 2px 4px 2px;
+    gap: 4%;
+    border-radius: 50px;
+}
+.botonInicio{
+    width: 35%;
+    height: 7%;
+    color: var(--chalet-green-950);
+    background-color: #acc492;
+    border-radius: 50px;
+}
+.botonInicio:hover{
+    cursor: pointer;
+    background-color: #313f29;
+    color: #f3f7ee;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #313f29;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #acc492;
+    color: #182112;
+    font-weight: bold;
+}
+
+td {
+    background-color: #e4ecdb;
+    color: #182112;
+}
+
+h2 {
+    color: #38482c;
+    text-align: center; 
+}
