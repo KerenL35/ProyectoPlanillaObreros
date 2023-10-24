@@ -3,66 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Planilla </title>
-</head>
-    <script>
-        // Simula el estado de autenticación (administrador impersonando empleado)
-        const esAdministradorImpersonando = true; // Cambiar a false para ocultar el botón
-
-        function mostrarBotonRegresar() {
-            const botonRegresar = document.getElementById('botonRegresar');
-            if (esAdministradorImpersonando) {
-                botonRegresar.style.display = 'block';
-            } else {
-                botonRegresar.style.display = 'none';
-            }
+    <title>Planilla de obreros</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .hidden {
+            display: none;
         }
-    </script>
+    </style>
 </head>
-<body onload="mostrarBotonRegresar()">
-    <div class="container">
-        <h1>Interfaz de Usuario</h1>
+<body>
+    <h2>Planilla de obreros</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Salario bruto</th>
+                <th>Total de deducciones</th>
+                <th>Salario neto</th>
+                <th>Cantidad de horas ordinarias</th>
+                <th>Cantidad de horas extra normales</th>
+                <th>Cantidad de horas extras dobles</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="show-attendance">1000</td>
+                <td class="deductions">100</td>
+                <td>900</td>
+                <td>40</td>
+                <td>8</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
 
-        <!-- R07: Consultar planilla semanal -->
-        <div class="planilla">
-            <h2>Últimas 15 Planillas Semanales</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Semana</th>
-                        <th>Salario Bruto</th>
-                        <th>Total de Deducciones</th>
-                        <th>Salario Neto</th>
-                        <th>Horas Ordinarias</th>
-                        <th>Horas Extra Normales</th>
-                        <th>Horas Extras Dobles</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Semana 1</td>
-                        <td><a href="#">Ver</a></td>
-                        <td><a href="#">Ver</a></td>
-                        <td>$1,300</td>
-                        <td>40 horas</td>
-                        <td>5 horas</td>
-                        <td>2 horas</td>
-                    </tr>
-                    <!-- Repite este bloque de filas para cada planilla semanal -->
-                </tbody>
-            </table>
-        </div>
+    <!-- Detalle de Deducciones -->
+    <div id="deductionDetail" class="hidden">
+        <h3>Detalle de Deducciones</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre de la deducción</th>
+                    <th>Porcentaje aplicado</th>
+                    <th>Monto de la deducción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se agregará el detalle de deducciones dinámicamente con JavaScript -->
+            </tbody>
+        </table>
+        <button id="hideDeductionsButton">Ocultar Deducciones</button>
+    </div>
 
-        <!-- Botón para regresar a la interfaz de administrador -->
-        <button id="botonRegresar" style="display: none" onclick="regresarAInterfazAdministrador()">Regresar a Interfaz de Administrador</button>
+    <!-- Detalle de Asistencia -->
+    <div id="attendanceDetail" class="hidden">
+        <h3>Detalle de Asistencia</h3>
+        <div id="attendanceGrid"></div>
+        <button id="hideAttendanceButton">Ocultar Asistencia</button>
     </div>
 
     <script>
-        function regresarAInterfazAdministrador() {
-            // Aquí puedes implementar la lógica para regresar a la interfaz de administrador
-            // Redirige a la página de administrador o realiza otras acciones necesarias.
-        }
+        const deductionCell = document.querySelector('.deductions');
+        const deductionDetail = document.getElementById('deductionDetail');
+        const deductionsTable = deductionDetail.querySelector('tbody');
+        const hideDeductionsButton = document.getElementById('hideDeductionsButton');
+
+        const attendanceCell = document.querySelector('.show-attendance');
+        const attendanceDetail = document.getElementById('attendanceDetail');
+        const attendanceGrid = document.getElementById('attendanceGrid');
+        const hideAttendanceButton = document.getElementById('hideAttendanceButton');
+
+        // Manejador de clic en el monto de deducciones
+        deductionCell.addEventListener('click', () => {
+            // Mostrar el detalle de deducciones
+            deductionDetail.classList.remove('hidden');
+            // Simulación de datos de deducciones (puedes obtenerlos de una fuente de datos real)
+            const deductionsData = [
+                { name: 'Deducción 1', percentage: 5, amount: 5 },
+                { name: 'Deducción 2', percentage: 10, amount: 10 },
+            ];
+
+            // Limpiar cualquier contenido previo en la tabla de deducciones
+            deductionsTable.innerHTML = '';
+
+            // Agregar filas de deducciones al detalle
+            deductionsData.forEach((deduction) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${deduction.name}</td>
+                    <td>${deduction.percentage}%</td>
+                    <td>${deduction.amount}</td>
+                `;
+                deductionsTable.appendChild(row);
+            });
+        });
+
+        // Manejador de clic en el salario bruto
+        attendanceCell.addEventListener('click', () => {
+            // Mostrar el detalle de asistencia
+            attendanceDetail.classList.remove('hidden');
+            // Simulación de datos de asistencia (puedes obtenerlos de una fuente de datos real)
+            const attendanceData = [
+                { day: 'Lunes', entryTime: '08:00 AM', exitTime: '04:00 PM', ordinaryHours: 8, ordinaryAmount: 80, extraNormalHours: 0, extraNormalAmount: 0, extraDoubleHours: 0, extraDoubleAmount: 0 },
+                // Puedes agregar datos para los demás días de la semana aquí
+            ];
+
+            // Limpiar cualquier contenido previo en el grid de asistencia
+            attendanceGrid.innerHTML = '';
+
+            // Crear el encabezado del grid
+            const headerRow = document.createElement('div');
+            headerRow.className = 'grid-row';
+            headerRow.innerHTML = '<div class="grid-cell">Día</div><div class="grid-cell">Entrada</div><div class="grid-cell">Salida</div><div class="grid-cell">Horas Ordinarias</div><div class="grid-cell">Monto Ordinario</div><div class="grid-cell">Horas Extras Normales</div><div class="grid-cell">Monto Extra Normal</div><div class="grid-cell">Horas Extras Dobles</div><div class="grid-cell">Monto Extra Doble</div>';
+            attendanceGrid.appendChild(headerRow);
+
+            // Agregar filas de asistencia al grid
+            attendanceData.forEach((attendance) => {
+                const row = document.createElement('div');
+                row.className = 'grid-row';
+                row.innerHTML = `
+                    <div class="grid-cell">${attendance.day}</div>
+                    <div class="grid-cell">${attendance.entryTime}</div>
+                    <div class="grid-cell">${attendance.exitTime}</div>
+                    <div class="grid-cell">${attendance.ordinaryHours}</div>
+                    <div class="grid-cell">${attendance.ordinaryAmount}</div>
+                    <div class="grid-cell">${attendance.extraNormalHours}</div>
+                    <div class="grid-cell">${attendance.extraNormalAmount}</div>
+                    <div class="grid-cell">${attendance.extraDoubleHours}</div>
+                    <div class="grid-cell">${attendance.extraDoubleAmount}</div>
+                `;
+                attendanceGrid.appendChild(row);
+            });
+        });
+
+        // Manejador de clic en el botón para ocultar deducciones
+        hideDeductionsButton.addEventListener('click', () => {
+            // Ocultar el detalle de deducciones al hacer clic en el botón
+            deductionDetail.classList.add('hidden');
+        });
+
+        // Manejador de clic en el botón para ocultar asistencia
+        hideAttendanceButton.addEventListener('click', () => {
+            // Ocultar el detalle de asistencia al hacer clic en el botón
+            attendanceDetail.classList.add('hidden');
+        });
     </script>
 </body>
 </html>
