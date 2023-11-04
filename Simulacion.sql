@@ -1,8 +1,22 @@
+USE Pruebas
+DECLARE @xmlData XML	
+
+-- Cargar archivos xml
+SET @xmlData = (
+	SELECT *
+	FROM OPENROWSET(
+		BULK 'C:\Users\keren\OneDrive\Escritorio\Bases de Datos I\ProyectoPlanillaObrera\OperacionesV2.xml',
+		SINGLE_BLOB
+	) AS xmlData
+);
+
 -- script de simulación
 DECLARE @FechaOperacionItera DATE, @FechaOperacionFinal DATE;
 
 -- Declaración de Constantes
 DECLARE @IDTIPOUSUARIOEMPLEADO INT = 2;
+
+
 
 -- Declaración de tablas para Empleados y Asistencias
 DECLARE @EmpleadosDelXML TABLE (
@@ -15,6 +29,39 @@ DECLARE @EmpleadosDelXML TABLE (
     Usuario VARCHAR(32),
     Clave VARCHAR(32)
 );
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Juan Pérez', 1, '12345', 2, 3, 'juanperez', 'contraseña1');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('María González', 2, '67890', 1, 4, 'mariagonzalez', 'contraseña2');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Carlos Rodríguez', 1, '54321', 3, 2, 'carlosrodriguez', 'contraseña3');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Ana López', 2, '98765', 2, 3, 'analopez', 'contraseña4');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Pedro Ramírez', 1, '12345', 3, 1, 'pedroramirez', 'contraseña5');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Laura Martínez', 2, '67890', 1, 4, 'lauramartinez', 'contraseña6');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Roberto Sánchez', 1, '54321', 2, 2, 'robertosanchez', 'contraseña7');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Luisa García', 2, '98765', 3, 1, 'luisagarcia', 'contraseña8');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Jorge Hernández', 1, '12345', 1, 4, 'jorgehernandez', 'contraseña9');
+
+INSERT INTO @EmpleadosDelXML (Nombre, idTipoDocumentoIdentidad, ValorDocumentoIdentidad, idDepartamento, idPuesto, Usuario, Clave)
+VALUES ('Carmen Castro', 2, '67890', 3, 3, 'carmencastro', 'contraseña10');
+
+INSERT INTO dbo.COMEMEMIAMOR 
+SELECT * FROM @EmpleadosDelXML;
 
 DECLARE @Asistencias TABLE (
     SEC INT IDENTITY(1, 1) PRIMARY KEY,
@@ -72,7 +119,18 @@ BEGIN
     INNER JOIN @EmpleadosDelXML XML ON E.ValorDocumentoIdentidad = XML.ValorDocumentoIdentidad
     INNER JOIN dbo.Usuario U ON XML.Usuario = U.Usuario;
 
-  
+  -- Procesar deducciones en la tabla TipoJornada
+    INSERT INTO [PlanillaObrera].[dbo].[TipoJornada] ([nombre], [fechaInicio], [fechaFin])
+    SELECT XML.Nombre, XML.FechaInicio, XML.FechaFin
+    FROM @EmpleadosDelXML AS XML
+    WHERE FechaOperacion = @FechaOperacionItera;
+
+    -- Procesar jornadas en la tabla Jornada
+    -- Supongamos que hay una tabla llamada Jornadas con campos (nombre, horaInicio, horaFin, MarcaAsistenciaId, tipoJornadaId, SemanaPlanillaId)
+    INSERT INTO [PlanillaObrera].[dbo].[Jornada] ([nombre], [horaInicio], [horaFin], [MarcaAsistenciaId], [tipoJornadaId], [SemanaPlanillaId])
+    SELECT XML.Nombre, XML.HoraInicio, XML.HoraFin, XML.MarcaAsistenciaId, XML.TipoJornadaId, XML.SemanaPlanillaId
+    FROM @EmpleadosDelXML AS XML
+    WHERE FechaOperacion = @FechaOperacionItera;
 
     -- Cargar asistencias del XML
     DELETE FROM @Asistencias;
