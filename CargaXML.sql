@@ -18,16 +18,14 @@ SELECT
 FROM @xmlData.nodes('/Catalogos/TiposdeDocumentodeIdentidad/TipoDocIdentidad') AS T(TipoDocIdentidad);
 
 -- Insertar tipos de jornada con el XML cargado
-	INSERT INTO [dbo].[Jornada]
-		([nombre], [horaInicio], [horaFin], [MarcaAsistenciaId], [tipoJornadaId], [SemanaPlanillaId])
+	INSERT INTO [dbo].[TipoJornada]
+		( [nombre], [horaInicio], [horaFin])
 	SELECT
+		T.Jornada.value('@Id', 'INT'),
 		T.Jornada.value('@Nombre', 'VARCHAR(64)') AS Nombre,
 		T.Jornada.value('@HoraInicio', 'TIME') AS HoraInicio,
-		T.Jornada.value('@HoraFin', 'TIME') AS HoraFin,
-		0 AS MarcaAsistenciaId,
-		0 AS tipoJornadaId,
-		0 AS SemanaPlanillaId
-	FROM @xmlData.nodes('/TiposDeJornadas/Jornada') AS T(Jornada)
+		T.Jornada.value('@HoraFin', 'TIME') AS HoraFin
+	FROM @xmlData.nodes('/Catalogos/TiposDeJornadas/TipoDeJornada') AS T(Jornada)
 
 -- Insertar puestos con el xml cargado
 INSERT INTO dbo.Puesto
@@ -54,13 +52,6 @@ SELECT
     T.Feriado.value('@Fecha', 'DATE') AS Fecha
 FROM @xmlData.nodes('/Catalogos/Feriados/Feriado') AS T(Feriado);
 
--- Insertar datos desde el XML a la tabla TipoMovimientoPlanilla
-INSERT INTO dbo.TipoMovimientoPlanilla
-    ([nombre])
-SELECT
-    T.TipoDeMovimiento.value('@Nombre', 'VARCHAR(128)') AS Nombre
-FROM @xmlData.nodes('/TiposDeMovimiento/TipoDeMovimiento') AS T(TipoDeMovimiento);
-
 -- Insertar tipos de deducción con el xml cargado
 INSERT INTO dbo.TipoDeduccion
     ([Nombre]
@@ -74,6 +65,16 @@ SELECT
     T.TipoDeDeduccion.value('@Valor', 'DECIMAL(10, 4)') AS Valor
 FROM @xmlData.nodes('/Catalogos/TiposDeDeduccion/TipoDeDeduccion') AS T(TipoDeDeduccion);
 
+-- Insertar datos desde el XML a la tabla TipoMovimientoPlanilla
+INSERT INTO dbo.TipoMovimientoPlanilla
+    ([nombre], tipoMovDeduccionId)
+SELECT
+    T.TipoDeMovimiento.value('@Nombre', 'VARCHAR(128)') AS Nombre,
+	T.TipoDeMovimiento.value('@tipoMovDeduccionId', 'INT') AS tipoMovDeduccionId
+FROM @xmlData.nodes('/Catalogos/TiposDeMovimiento/TipoDeMovimiento') AS T(TipoDeMovimiento);
+
+
+
 -- Insertar usuarios con el xml cargado
 INSERT INTO dbo.Usuario
     ([Nombre]
@@ -82,7 +83,7 @@ INSERT INTO dbo.Usuario
 SELECT
     T.Usuario.value('@Username', 'VARCHAR(32)') AS Nombre,
     T.Usuario.value('@Pwd', 'VARCHAR(32)') AS Clave,
-    T.Usuario.value('@Tipo', 'INT') AS Tipo
+    T.Usuario.value('@tipo', 'INT') AS Tipo
 FROM @xmlData.nodes('/Catalogos/UsuariosAdministradores/Usuario') AS T(Usuario);
 
 -- Insertar tipos de evento con el xml cargado
