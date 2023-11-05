@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Operacion>
+  <FechaOperacion Fecha="2023-07-06">
+    <EliminarEmpleados>
+      <EliminarEmpleado ValorTipoDocumento="169921248"/>
+    </EliminarEmpleados>
+  </FechaOperacion>
+</Operacion>
