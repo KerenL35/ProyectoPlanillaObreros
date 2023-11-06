@@ -6,7 +6,7 @@ DECLARE @FechaOperacion DATE; -- Agrega una variable para la fecha de operación
 
 SET @xmlDataDelete = (
     SELECT *
-    FROM OPENROWSET(BULK 'C:\Users\keren\OneDrive\Escritorio\Bases de Datos I\ProyectoPlanillaObrera\PruebasSimulacion\pruebas.xml', SINGLE_BLOB) AS xmlData
+    FROM OPENROWSET(BULK 'C:\Users\keren\OneDrive\Escritorio\Bases de Datos I\ProyectoPlanillaObrera\PruebasSimulacion\pruebasEliminar.xml', SINGLE_BLOB) AS xmlData
 );
 
 -- Obtener la fecha de operación del XML
@@ -44,4 +44,3 @@ BEGIN CATCH
     PRINT ERROR_MESSAGE(); -- Puedes reemplazar esto con un manejo de errores apropiado
 END CATCH;
  
-

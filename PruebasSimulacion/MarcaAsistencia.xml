@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Operacion>
+<MarcasAsistencia>
+    <MarcaDeAsistencia ValorTipoDocumento="314052787" HoraEntrada="2023-07-07 6:00 am" HoraSalida="2023-07-07 2:00 pm"/>
+    <MarcaDeAsistencia ValorTipoDocumento="296971035" HoraEntrada="2023-07-07 6:00 am" HoraSalida="2023-07-07 3:00 pm"/>
+    <MarcaDeAsistencia ValorTipoDocumento="544276775" HoraEntrada="2023-07-07 6:00 am" HoraSalida="2023-07-07 2:00 pm"/>
+    <MarcaDeAsistencia ValorTipoDocumento="364135477" HoraEntrada="2023-07-07 2:00 pm" HoraSalida="2023-07-07 10:00 pm"/>
+    <MarcaDeAsistencia ValorTipoDocumento="675743563" HoraEntrada="2023-07-07 2:00 pm" HoraSalida="2023-07-07 11:00 pm"/>
+    <MarcaDeAsistencia ValorTipoDocumento="756205752" HoraEntrada="2023-07-07 2:00 pm" HoraSalida="2023-07-07 11:00 pm"/>
+ </MarcasAsistencia>
+ </Operacion>

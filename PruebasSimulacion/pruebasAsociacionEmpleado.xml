@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Operacion>
   <AsociacionEmpleadoDeducciones>
-    <AsociacionEmpleadoConDeduccion IdTipoDeduccion="4" ValorTipoDocumento="169921248" Monto="20000"/>
+    <AsociacionEmpleadoConDeduccion IdTipoDeduccion="4" ValorTipoDocumento="314052787" Monto="20000"/>
   </AsociacionEmpleadoDeducciones>
 </Operacion>

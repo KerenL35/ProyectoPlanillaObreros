@@ -12,7 +12,7 @@ DECLARE @Password VARCHAR(64);
 
 SET @xmlData = (
         SELECT *
-        FROM OPENROWSET(BULK 'C:\Users\keren\OneDrive\Escritorio\Bases de Datos I\ProyectoPlanillaObrera\PruebasSimulacion\pruebas.xml', SINGLE_BLOB) AS xmlData
+        FROM OPENROWSET(BULK 'C:\Users\keren\OneDrive\Escritorio\Bases de Datos I\ProyectoPlanillaObrera\PruebasSimulacion\PruebaInsertarEmpleado.xml', SINGLE_BLOB) AS xmlData
     );
 
 DECLARE @EmpleadosDelXML TABLE (
@@ -29,15 +29,7 @@ DECLARE @EmpleadosDelXML TABLE (
 SET NOCOUNT ON;
 
 BEGIN TRY
-    -- Recorrer los elementos <NuevoEmpleado> en el XML
-    DECLARE @EmpleadoIndex INT;
-    DECLARE @TotalEmpleados INT;
 
-    SELECT @TotalEmpleados = @xmlData.value('count(/Operacion/NuevosEmpleados/NuevoEmpleado)', 'INT');
-    SET @EmpleadoIndex = 1;
-
-    WHILE @EmpleadoIndex <= @TotalEmpleados
-    BEGIN
         -- Obtener los datos del empleado actual
 		INSERT @EmpleadosDelXML (
 					nombre
@@ -67,11 +59,10 @@ BEGIN TRY
 		DELETE FROM @EmpleadosDelXML
         
 
-        -- Incrementar el índice del empleado
-        SET @EmpleadoIndex = @EmpleadoIndex + 1;
-    END;
+
 END TRY
 BEGIN CATCH
     -- Handle errors here
     PRINT ERROR_MESSAGE(); -- Puedes reemplazar esto con un manejo de errores apropiado
 END CATCH;
+
