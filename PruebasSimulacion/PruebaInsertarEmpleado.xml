@@ -1,14 +1,16 @@
 <Operacion>
- <NuevosEmpleados>
-  <NuevoEmpleado Nombre="Pedro Zeledón" IdTipoDocumento="1"   ValorTipoDocumento="314052787" IdDepartamento="1" IdPuesto="1" Usuario="Pezele87" Password="Kd197#"/>
-  <NuevoEmpleado Nombre="Pablo García" IdTipoDocumento="1"    ValorTipoDocumento="169921248" IdDepartamento="1" IdPuesto="3" Usuario="Pagarc48" Password="#J749m"/>
-  <NuevoEmpleado Nombre="Ana Mora" IdTipoDocumento="1"        ValorTipoDocumento="296971035" IdDepartamento="2" IdPuesto="2" Usuario="Anmora35" Password="123!qP"/>
-  <NuevoEmpleado Nombre="Juan Rojas" IdTipoDocumento="1"      ValorTipoDocumento="544276775" IdDepartamento="2" IdPuesto="2" Usuario="Juroja75" Password="v(V513"/>
-  <NuevoEmpleado Nombre="María Pérez" IdTipoDocumento="1"     ValorTipoDocumento="364135477" IdDepartamento="2" IdPuesto="5" Usuario="Mapere77" Password="Ld#168"/>
-  <NuevoEmpleado Nombre="Lucía Hernández" IdTipoDocumento="1" ValorTipoDocumento="675743563" IdDepartamento="3" IdPuesto="4" Usuario="Luhern63" Password="h048$N"/>
-  <NuevoEmpleado Nombre="Raquel Flores" IdTipoDocumento="1"   ValorTipoDocumento="756205752" IdDepartamento="4" IdPuesto="4" Usuario="Raflor52" Password="Aj651@"/>
-  <NuevoEmpleado Nombre="José Diaz" IdTipoDocumento="1"       ValorTipoDocumento="860045352" IdDepartamento="4" IdPuesto="3" Usuario="Jodiaz52" Password="Ej!951"/>
-  <NuevoEmpleado Nombre="Carlos Sánchez" IdTipoDocumento="1"  ValorTipoDocumento="294033226" IdDepartamento="5" IdPuesto="6" Usuario="Casanc26" Password="k@K888"/>
-  <NuevoEmpleado Nombre="Sofia Mora" IdTipoDocumento="1"      ValorTipoDocumento="377724642" IdDepartamento="5" IdPuesto="4" Usuario="Somora42" Password="X321s#"/>
- </NuevosEmpleados>
- </Operacion>
+	<FechaOperacion Fecha="2023-07-06">
+		<NuevosEmpleados>
+			<NuevoEmpleado Nombre="Pedro Zeledón" IdTipoDocumento="1" ValorTipoDocumento="314052787" IdDepartamento="1" IdPuesto="1" Usuario="Pezele87" Password="Kd197#" />
+			<NuevoEmpleado Nombre="Pablo García" IdTipoDocumento="1" ValorTipoDocumento="169921248" IdDepartamento="1" IdPuesto="3" Usuario="Pagarc48" Password="#J749m" />
+			<NuevoEmpleado Nombre="Ana Mora" IdTipoDocumento="1" ValorTipoDocumento="296971035" IdDepartamento="2" IdPuesto="2" Usuario="Anmora35" Password="123!qP" />
+			<NuevoEmpleado Nombre="Juan Rojas" IdTipoDocumento="1" ValorTipoDocumento="544276775" IdDepartamento="2" IdPuesto="2" Usuario="Juroja75" Password="v(V513" />
+			<NuevoEmpleado Nombre="María Pérez" IdTipoDocumento="1" ValorTipoDocumento="364135477" IdDepartamento="2" IdPuesto="5" Usuario="Mapere77" Password="Ld#168" />
+			<NuevoEmpleado Nombre="Lucía Hernández" IdTipoDocumento="1" ValorTipoDocumento="675743563" IdDepartamento="3" IdPuesto="4" Usuario="Luhern63" Password="h048$N" />
+			<NuevoEmpleado Nombre="Raquel Flores" IdTipoDocumento="1" ValorTipoDocumento="756205752" IdDepartamento="4" IdPuesto="4" Usuario="Raflor52" Password="Aj651@" />
+			<NuevoEmpleado Nombre="José Diaz" IdTipoDocumento="1" ValorTipoDocumento="860045352" IdDepartamento="4" IdPuesto="3" Usuario="Jodiaz52" Password="Ej!951" />
+			<NuevoEmpleado Nombre="Carlos Sánchez" IdTipoDocumento="1" ValorTipoDocumento="294033226" IdDepartamento="5" IdPuesto="6" Usuario="Casanc26" Password="k@K888" />
+			<NuevoEmpleado Nombre="Sofia Mora" IdTipoDocumento="1" ValorTipoDocumento="377724642" IdDepartamento="5" IdPuesto="4" Usuario="Somora42" Password="X321s#" />
+		</NuevosEmpleados>
+	</FechaOperacion>
+</Operacion>

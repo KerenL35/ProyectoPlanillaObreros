@@ -1,3 +1,4 @@
+-- Usar la base de datos 'Pruebas'
 USE Pruebas;
 
 -- Declaración de variables
@@ -6,6 +7,7 @@ DECLARE @xmlData XML;
 -- Cargar datos XML desde el archivo
 SET NOCOUNT ON;
 BEGIN TRY
+    -- Leer datos XML desde un archivo
     SET @xmlData = (
         SELECT *
         FROM OPENROWSET (
@@ -31,7 +33,7 @@ BEGIN TRY
         T.Item.value('@ValorTipoDocumento', 'INT') AS valorTipoDocumentoId,
         T.Item.value('@HoraEntrada', 'DATETIME') AS horaEntrada,
         T.Item.value('@HoraSalida', 'DATETIME') AS horaSalida
-    FROM @xmlData.nodes('/Operacion/MarcasAsistencia/MarcaDeAsistencia') AS T(Item);
+    FROM @xmlData.nodes('/Operacion/FechaOperacion/MarcasAsistencia/MarcaDeAsistencia') AS T(Item);
 
     -- Mostrar los datos insertados en la tabla @MarcasAsistencia
     SELECT * FROM @MarcasAsistencia;
@@ -39,35 +41,73 @@ BEGIN TRY
     -- Insertar datos en la tabla MarcasAsistencia
     INSERT INTO MarcasAsistencia (valorTipoDocumentoId, horaEntrada, horaSalida)
     SELECT * FROM @MarcasAsistencia;
+-- -----------------------------------------------------------------------------------------------------
 
--- Calcular las horas trabajadas extras normales y generar movimientos
-DECLARE @SalarioPorHoraExtras DECIMAL(10, 2); -- Debes establecer el salario por hora extra del empleado
+	-- Declaración de variable para la fecha actual
+	DECLARE @FechaActual DATE;
 
-INSERT INTO MovHoras (marcasAsistenciaId, horasExtras, monto)
-SELECT
-    MA.id,
-    CASE
-        WHEN DATEDIFF(HOUR, MA.horaSalida, MA.horaEntrada) > 7.5 THEN DATEDIFF(HOUR, MA.horaSalida, MA.horaEntrada) - 7.5
-        ELSE 0
-    END AS horasExtras,
-    CASE
-        WHEN DATEPART(WEEKDAY, MA.horaSalida) IN (1, 7) THEN 1.5 -- Domingo o sábado
-        -- Agregar aquí la lógica para verificar si la fecha es feriado y establecer el factor multiplicador apropiado.
-        ELSE 1.5 -- Por defecto, se utiliza 1.5
-    END * 
-    (CASE
-        WHEN DATEDIFF(HOUR, MA.horaSalida, MA.horaEntrada) > 7.5 THEN DATEDIFF(HOUR, MA.horaSalida, MA.horaEntrada) - 7.5
-        ELSE 0
-    END) * @SalarioPorHoraExtras AS monto
-FROM MarcasAsistencia AS MA
-JOIN Empleado AS E ON E.valorTipoDocumento = MA.valorTipoDocumentoId
-WHERE DATEDIFF(HOUR, MA.horaSalida, MA.horaEntrada) > 7.5; -- Solo se pagan horas extras (más de 7.5 horas)
+	SELECT @FechaActual = FechaOperacion.value('@Fecha', 'DATE')
+	FROM @xmlData.nodes('/Operacion/FechaOperacion') AS FechaOperacion(FechaOperacion);
+
+	-- Verificar si el día actual es feriado
+	DECLARE @EsFeriado INT;
+
+	IF EXISTS (SELECT 1 FROM Feriado WHERE fecha = @FechaActual)
+	BEGIN
+		SET @EsFeriado = 1;
+	END
+	ELSE
+	BEGIN
+		SET @EsFeriado = 0;
+	END
+
+	-- Calcular el factor de multiplicación
+	DECLARE @FactorMultiplicadorOrdinarias DECIMAL(3, 1);
+	DECLARE @FactorMultiplicadorDobles DECIMAL(3, 1);
+
+	IF DATEPART(WEEKDAY, CONVERT (DATE, @FechaActual, 105)) = 1 OR @EsFeriado = 1
+	BEGIN 
+		SET @FactorMultiplicadorOrdinarias = 0; -- Domingo o feriado
+		SET @FactorMultiplicadorDobles = 2; -- Otros días
+	END
+
+	ELSE
+	BEGIN 
+		SET @FactorMultiplicadorOrdinarias = 1.5; -- Otros días
+		SET @FactorMultiplicadorDobles = 0; 
+	END
+
+	-- Calcular las horas trabajadas ordinarias y horas extras
+	INSERT INTO MovHoras (marcasAsistenciaId, montoHorasOrdinaria, montoHorasExtras, montoHorasExtrasDoble)
+	SELECT
+		MA.id,
+		CASE
+			-- Calcular horas trabajadas ordinarias
+			WHEN DATEDIFF(HOUR, MA.horaEntrada, MA.horaSalida) <= 8 THEN DATEDIFF(HOUR, MA.horaEntrada, MA.horaSalida) * Puesto.salarioXhora
+			ELSE 8 * Puesto.salarioXhora
+		END AS montoHorasOrdinaria,
+		CASE
+			-- Calcular horas extras normales
+			WHEN DATEDIFF(HOUR, MA.horaEntrada, MA.horaSalida) <= 8 THEN 0
+			ELSE (DATEDIFF(HOUR, MA.horaEntrada, MA.horaSalida) - 8) * Puesto.salarioXhora * @FactorMultiplicadorOrdinarias
+		END AS montoHorasExtras,
+		CASE
+			-- Calcular horas extras dobles
+			WHEN DATEDIFF(HOUR, MA.horaEntrada, MA.horaSalida) > 8 THEN
+				(DATEDIFF(HOUR, MA.horaEntrada, MA.horaSalida) - 8) * @FactorMultiplicadorDobles * Puesto.salarioXhora
+			ELSE 0
+		END AS montoHorasExtrasDoble
+	FROM MarcasAsistencia MA
+	INNER JOIN Empleado ON Empleado.valorTipoDocumento = MA.valorTipoDocumentoId
+	INNER JOIN Puesto ON Empleado.puestoId = Puesto.id;
 
 
-    -- Mostrar los datos insertados en la tabla MovHoras
-    SELECT * FROM MovHoras;
+	-- Mostrar los datos insertados en la tabla MovHoras
+	SELECT * FROM MovHoras;
+
 
 END TRY
 BEGIN CATCH
     PRINT ERROR_MESSAGE(); -- Puedes reemplazar esto con el manejo de errores adecuado
 END CATCH;
+

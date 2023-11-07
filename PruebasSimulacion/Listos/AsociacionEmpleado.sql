@@ -22,17 +22,20 @@ SELECT
     T.Item.value('@IdTipoDeduccion', 'INT') AS tipoDeduccionId,
     T.Item.value('@ValorTipoDocumento', 'INT') AS valorTipoDocumentoId,
     T.Item.value('@Monto', 'MONEY') AS monto
-FROM @xmlData.nodes('/Operacion/AsociacionEmpleadoDeducciones/AsociacionEmpleadoConDeduccion') AS T(Item);
-
+FROM @xmlData.nodes('/Operacion/FechaOperacion/AsociacionEmpleadoDeducciones/AsociacionEmpleadoConDeduccion') AS T(Item);
 
 BEGIN TRY
-    -- Realizar la inserción en la tabla DeduccionXempleado
-	INSERT INTO DeduccionXempleado SELECT * FROM @DeduccionesDelXML
+    -- Calcular la fecha del próximo inicio de semana
+    DECLARE @ProximoInicioDeSemana DATE;
+    SET @ProximoInicioDeSemana = DATEADD(DAY, 7 - DATEPART(WEEKDAY, GETDATE()), GETDATE());
+
+    -- Realizar la inserción en la tabla DeduccionXempleado si la fecha de registro es a partir del próximo inicio de semana
+    INSERT INTO DeduccionXempleado (tipoDeduccionId, valorTipoDocumentoId, monto, fechaDeRegistro)
+    SELECT tipoDeduccionId, valorTipoDocumentoId, monto, @ProximoInicioDeSemana
+    FROM @DeduccionesDelXML;
 
 END TRY
 BEGIN CATCH
     PRINT ERROR_MESSAGE(); -- Puedes reemplazar esto con un manejo de errores adecuado
 END CATCH;
-
-
 

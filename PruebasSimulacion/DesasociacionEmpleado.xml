@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Operacion>
-<FechaOperacion Fecha="2023-07-06">
-<DesasociacionEmpleadoDeducciones>
-  <DesasociacionEmpleadoConDeduccion IdTipoDeduccion="5" ValorTipoDocumento="412590986"/>
-</DesasociacionEmpleadoDeducciones>
-</FechaOperacion>
+	<FechaOperacion Fecha="2023-07-06">
+		<DesasociacionEmpleadoDeducciones>
+			<DesasociacionEmpleadoConDeduccion IdTipoDeduccion="5" ValorTipoDocumento="544276775" />
+		</DesasociacionEmpleadoDeducciones>
+	</FechaOperacion>
 </Operacion>
