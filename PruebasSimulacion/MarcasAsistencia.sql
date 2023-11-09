@@ -41,7 +41,6 @@ BEGIN TRY
     -- Insertar datos en la tabla MarcasAsistencia
     INSERT INTO MarcasAsistencia (valorTipoDocumentoId, horaEntrada, horaSalida)
     SELECT * FROM @MarcasAsistencia;
--- -----------------------------------------------------------------------------------------------------
 
 	-- Declaración de variable para la fecha actual
 	DECLARE @FechaActual DATE;
@@ -65,7 +64,7 @@ BEGIN TRY
 	DECLARE @FactorMultiplicadorOrdinarias DECIMAL(3, 1);
 	DECLARE @FactorMultiplicadorDobles DECIMAL(3, 1);
 
-	IF DATEPART(WEEKDAY, CONVERT (DATE, @FechaActual, 105)) = 1 OR @EsFeriado = 1
+	IF DATEPART(WEEKDAY, CONVERT(DATE, @FechaActual, 105)) = 1 OR @EsFeriado = 1
 	BEGIN 
 		SET @FactorMultiplicadorOrdinarias = 0; -- Domingo o feriado
 		SET @FactorMultiplicadorDobles = 2; -- Otros días
@@ -99,15 +98,35 @@ BEGIN TRY
 		END AS montoHorasExtrasDoble
 	FROM MarcasAsistencia MA
 	INNER JOIN Empleado ON Empleado.valorTipoDocumento = MA.valorTipoDocumentoId
-	INNER JOIN Puesto ON Empleado.puestoId = Puesto.id;
+	INNER JOIN Puesto ON Empleado.puestoId = Puesto.id
+	WHERE MA.horaEntrada >= @FechaActual
+
+	
 
 
-	-- Mostrar los datos insertados en la tabla MovHoras
-	SELECT * FROM MovHoras;
+
+	INSERT INTO MovimientoPlanilla(fecha, monto, nuevoSalarioBruto, movHorasId)
+	SELECT 
+	@FechaActual,
+	(montoHorasOrdinaria + montoHorasExtras + montoHorasExtrasDoble),
+	COALESCE((SELECT
+		salarioBruto
+		FROM SemanaPlanilla
+		WHERE valorTipoDocumentoId = MA.valorTipoDocumentoId 
+		AND MA.horaEntrada >= fechaInicio
+		AND MA.horaSalida <= fechaFin),0.00) + (montoHorasOrdinaria + montoHorasExtras + montoHorasExtrasDoble),
+	MovHoras.id
+	FROM MovHoras
+	INNER JOIN MarcasAsistencia MA ON MA.id = MovHoras.marcasAsistenciaId
+	WHERE CAST(MA.horaEntrada AS date) = @FechaActual
+
 
 
 END TRY
 BEGIN CATCH
     PRINT ERROR_MESSAGE(); -- Puedes reemplazar esto con el manejo de errores adecuado
 END CATCH;
+
+SELECT * FROM MovHoras
+SELECT * FROM MovimientoPlanilla
 

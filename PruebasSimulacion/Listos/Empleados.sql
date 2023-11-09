@@ -14,7 +14,7 @@ DECLARE @EmpleadosDelXML TABLE (
 -- Cargar el archivo XML en la variable @xmlData
 SET @xmlData = (
     SELECT *
-    FROM OPENROWSET(BULK 'C:\Users\keren\OneDrive\Escritorio\Bases de Datos I\ProyectoPlanillaObrera\PruebasSimulacion\PruebaInsertarEmpleado.xml', SINGLE_BLOB) AS xmlData
+    FROM OPENROWSET(BULK 'C:\Users\keren\OneDrive\Escritorio\Bases de Datos I\ProyectoPlanillaObrera\OperacionesV2.xml', SINGLE_BLOB) AS xmlData
 );
 
 -- Obtener la fecha de operación del XML
@@ -57,6 +57,7 @@ BEGIN TRY
         T.Empleado.value('@Password', 'VARCHAR(64)') AS clave
     FROM @xmlData.nodes('/Operacion/FechaOperacion/NuevosEmpleados/NuevoEmpleado') AS T(Empleado);
 
+
     -- Insertar empleados en la próxima semana
     INSERT INTO Empleado (nombre, tipoDocumentoId, valorTipoDocumento, departamentoId, puestoId, usuario, clave)
     SELECT
@@ -71,4 +72,3 @@ BEGIN CATCH
 END CATCH;
 
 select * from Empleado
-
