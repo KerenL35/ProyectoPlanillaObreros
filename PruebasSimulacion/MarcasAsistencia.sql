@@ -89,17 +89,7 @@ FROM @MarcasAsistencia;
 FROM @xmlData.nodes('/Operacion/FechaOperacion') AS FechaOperacion(FechaOperacion);
 
 
-INSERT INTO MesPlanilla
-	(fechaInicio, fechaFin)
-VALUES
-	(@FechaPrimerJueves, @FechaUltimoJueves)
 
--- Se debe validar si hoy es jueves, si es jueves se hace el insert de abajo sino no se hace
-
-INSERT INTO SemanaPlanilla
-	(fechaInicio, fechaFin, mesPlanillaId)
-VALUES(@FechaActual, DATEADD(DAY,7,@FechaActual), (SELECT MAX(id)
-		FROM MesPlanilla))
 
 	-- Verificar si el d�a actual es feriado
 	DECLARE @EsFeriado INT;

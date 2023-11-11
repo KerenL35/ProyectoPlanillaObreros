@@ -14,6 +14,8 @@ delete from MovHoras
 DBCC CHECKIDENT ('MovHoras', RESEED, 0);
 delete from MarcasAsistencia
 DBCC CHECKIDENT ('MarcasAsistencia', RESEED, 0);
+delete from Jornada
+DBCC CHECKIDENT ('Jornada', RESEED, 0);
 
 
 

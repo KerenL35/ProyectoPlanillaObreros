@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Operacion>
-<FechaOperacion Fecha="2023-07-06">
-<JornadasProximaSemana>
-  <TipoJornadaProximaSemana ValorTipoDocumento="314052787" IdTipoJornada="1"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="169921248" IdTipoJornada="1"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="296971035" IdTipoJornada="1"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="544276775" IdTipoJornada="1"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="364135477" IdTipoJornada="2"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="675743563" IdTipoJornada="2"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="756205752" IdTipoJornada="2"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="860045352" IdTipoJornada="3"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="294033226" IdTipoJornada="3"/>
-  <TipoJornadaProximaSemana ValorTipoDocumento="377724642" IdTipoJornada="3"/>
- </JornadasProximaSemana>
-</FechaOperacion>
+	<FechaOperacion Fecha="2023-07-06">
+		<JornadasProximaSemana>
+			<TipoJornadaProximaSemana ValorTipoDocumento="314052787" IdTipoJornada="1" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="169921248" IdTipoJornada="1" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="296971035" IdTipoJornada="1" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="544276775" IdTipoJornada="1" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="364135477" IdTipoJornada="2" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="675743563" IdTipoJornada="2" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="756205752" IdTipoJornada="2" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="860045352" IdTipoJornada="3" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="294033226" IdTipoJornada="3" />
+			<TipoJornadaProximaSemana ValorTipoDocumento="377724642" IdTipoJornada="3" />
+		</JornadasProximaSemana>
+	</FechaOperacion>
 </Operacion>
