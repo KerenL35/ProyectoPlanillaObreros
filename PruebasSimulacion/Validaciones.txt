@@ -1,0 +1,19 @@
+Todo normal
+
+if(fechaActual == jueves){
+    cierreSemana (salarioNeto = bruto-deduc)
+    
+    if(fechaActual == ultimoJueves){
+
+        fechaTemporal = DATEADD(MONTH, 1, fechaActual)
+        bloque que busca primer y ultimo jueves (fechaTemporal)
+        crearNuevomesPlanilla(fechaActual, ultimoJueves)
+
+    }
+
+    semanaNueva()
+        
+}
+
+
+    

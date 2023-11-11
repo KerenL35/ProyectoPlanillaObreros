@@ -1,0 +1,12 @@
+1. Agarrar documento de Operaciones y cargarlo a como lo he hecho.
+2. Teniendo definidas arriba de todo, todas las variables tablas necesarias
+    vas a empezar a hacer un while hasta que se acaben las fechas de Operaciones
+    Puedes hacer una variable tabla con todas las fechas de operacion 
+    e iteras sobre ella.
+
+3. Intentas agarrar los datos que se ocupan poniendo selects de la tabla principal (la variable que contiene todo el xml)
+ Ejemplo:
+    Intentar agarrar todos los empleados de una fechas
+    SET fechaActual = siguienteFecha
+    PRINT 'Emp de fecha tal'
+

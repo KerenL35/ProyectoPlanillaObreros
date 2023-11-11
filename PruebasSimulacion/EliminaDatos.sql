@@ -1,11 +1,19 @@
 SELECT * FROM Empleado
-
+USE Pruebas
+DELETE FROM PlanillaSemXEmp
+DBCC CHECKIDENT ('PlanillaSemXEmp', RESEED, 0);
+DELETE FROM PlanillaMesXEmp
+DBCC CHECKIDENT ('PlanillaMesXEmp', RESEED, 0);
+DELETE FROM SemanaPlanilla
+DBCC CHECKIDENT ('SemanaPlanilla', RESEED, 0);
+DELETE FROM MesPlanilla
+DBCC CHECKIDENT ('MesPlanilla', RESEED, 0);
 delete from MovimientoPlanilla
-DBCC CHECKIDENT ('MovimientoPlanilla', RESEED, 0);
+DBCC CHECKIDENT ('MovimientoPlanilla', RESEED, 0);
 delete from MovHoras
-DBCC CHECKIDENT ('MovHoras', RESEED, 0);
+DBCC CHECKIDENT ('MovHoras', RESEED, 0);
 delete from MarcasAsistencia
-DBCC CHECKIDENT ('MarcasAsistencia', RESEED, 0);
+DBCC CHECKIDENT ('MarcasAsistencia', RESEED, 0);
 
 
 
@@ -14,6 +22,7 @@ select * from MarcasAsistencia
  
 go
 DROP VIEW IF EXISTS vw_SalarioBruto
+go
 CREATE VIEW vw_SalarioBruto AS
 SELECT  MA.valorTipoDocumentoId identi, SUM(montoHorasOrdinaria + montoHorasExtras + montoHorasExtrasDoble) AS Bruto FROM MovHoras MH
 INNER JOIN MarcasAsistencia MA ON MA.id = MH.id
